@@ -1,0 +1,7 @@
+# Plugins de terceiros baixados para vendor/ pelo sync.sh.
+# nome         repositório                                       commit                                    pasta no repositório
+ponytail       https://github.com/DietrichGebert/ponytail        96608e078b2d5ea607c5c3b8b5a54d1c1fba6846  .
+pstack         https://github.com/cursor/plugins                 fd268b808c786469e6dd8c8d9db864d0de4d669e  pstack
+thermos        https://github.com/cursor/plugins                 fd268b808c786469e6dd8c8d9db864d0de4d669e  thermos
+superpowers    https://github.com/obra/superpowers               22f0b463e7a5e579904dd6211a520321035526f7  .
+karpathy       https://github.com/forrestchang/andrej-karpathy-skills  2c606141936f1eeef17fa3043a72095b4765b9c2  .

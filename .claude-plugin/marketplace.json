@@ -1,0 +1,33 @@
+{
+  "name": "ai-dev-quality",
+  "owner": {
+    "name": "Marlon Zanardi"
+  },
+  "plugins": [
+    {
+      "name": "ponytail",
+      "description": "Menor solução que funciona: YAGNI, stdlib primeiro, sem abstração não pedida.",
+      "source": "./vendor/ponytail"
+    },
+    {
+      "name": "pstack",
+      "description": "Skills e princípios do poteto: no-comments, unslop, typescript-best-practices, tdd e outros.",
+      "source": "./vendor/pstack"
+    },
+    {
+      "name": "thermos",
+      "description": "Thermo-nuclear review: bugs/segurança e qualidade de código em subagentes paralelos.",
+      "source": "./vendor/thermos"
+    },
+    {
+      "name": "superpowers",
+      "description": "Fluxo completo: brainstorming, plano, TDD, debug sistemático, verificação e code review.",
+      "source": "./vendor/superpowers"
+    },
+    {
+      "name": "karpathy",
+      "description": "Diretrizes do Karpathy: pensar antes, simplicidade, mudança cirúrgica, objetivo verificável.",
+      "source": "./vendor/karpathy"
+    }
+  ]
+}
