@@ -113,10 +113,18 @@ O `install.sh` usa:
 
 O script anota em `~/.agents/skills/.ai-dev-quality` o que copiou. Ao reinstalar, remove só esses itens. Se você já tem uma skill com o mesmo nome, ela é mantida e o script avisa.
 
+## Verificação de segurança
+
+O `sync.sh` baixa cada plugin numa pasta temporária e pede ao Claude Code que leia o código antes de copiar para `vendor/`. A análise procura roubo de credenciais, execução de código remoto, ações destrutivas, persistência, ofuscação e instruções maliciosas nas skills. O relatório aparece no terminal e termina com `VEREDITO: APROVADO` ou `REPROVADO`. Se reprovar, `vendor/` não é alterado e a instalação para.
+
+O Claude roda sem Bash, hooks, plugins nem MCP, só com Read, Grep e Glob. Assim, o código baixado não é executado durante a análise. Cada análise leva alguns minutos e consome uso da sua conta. Só os plugins cujo commit mudou são analisados de novo: os aprovados ficam anotados em `vendor/.verificado`.
+
+A verificação exige o Claude Code instalado, mesmo para quem só instala no Cursor, Codex ou Copilot. Para pular por sua conta e risco: `SKIP_SCAN=1 bash install.sh`.
+
 ## Atualizar
 
 ```bash
-bash sync.sh --update   # avança os commits do upstream.lock para a versão mais recente
+bash sync.sh --update   # avança os commits do upstream.lock para a versão mais recente e verifica a segurança
 git diff upstream.lock  # revise o que mudou
 bash install.sh         # reinstala
 ```
@@ -140,7 +148,7 @@ Ou pelo painel `/plugin`. Nas outras ferramentas, apague a pasta da skill em `~/
 ```
 .claude-plugin/marketplace.json   catálogo de plugins para o Claude Code
 upstream.lock                     repositório e commit de cada plugin
-sync.sh                           baixa os plugins para vendor/ (ignorado pelo Git)
+sync.sh                           baixa os plugins, verifica a segurança e copia para vendor/ (ignorado pelo Git)
 install.sh                        instala nas ferramentas escolhidas
 ```
 

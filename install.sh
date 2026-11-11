@@ -42,21 +42,22 @@ fi
 echo "  Instalando para: ${b}${tools[*]}${r}"
 has() { [[ " ${tools[*]} " == *" $1 "* ]]; }
 
-title "Baixando skills nos commits do upstream.lock"
+# O Claude Code vem antes do sync.sh porque é ele que faz a verificação de segurança.
+if has claude && ! command -v claude >/dev/null; then
+  echo "  Instalando o Claude Code (instalador oficial)..."
+  case "$(uname -s)" in
+    MINGW* | MSYS* | CYGWIN*) powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm https://claude.ai/install.ps1 | iex" ;;
+    *) curl -fsSL https://claude.ai/install.sh | bash ;;
+  esac
+  export PATH="$HOME/.local/bin:$PATH"
+  ok "Claude Code $(claude --version)"
+fi
+
+title "Baixando skills e verificando a segurança"
 bash sync.sh
 
 if has claude; then
   title "Claude Code  →  plugins no escopo do usuário"
-  if ! command -v claude >/dev/null; then
-    echo "  Instalando o Claude Code (instalador oficial)..."
-    case "$(uname -s)" in
-      MINGW* | MSYS* | CYGWIN*) powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm https://claude.ai/install.ps1 | iex" ;;
-      *) curl -fsSL https://claude.ai/install.sh | bash ;;
-    esac
-    export PATH="$HOME/.local/bin:$PATH"
-    ok "Claude Code $(claude --version)"
-  fi
-
   claude plugin marketplace add "$root" >/dev/null
   for p in "${plugins[@]}"; do
     claude plugin install "$p@ai-dev-quality" --scope user >/dev/null
